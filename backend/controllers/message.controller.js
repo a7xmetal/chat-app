@@ -23,7 +23,7 @@ export const sendMessage = async (req, res) => {
 
       // Create a new message in the database with the provided sender, receiver, and message content
       // This is necessary to persist the message so that it can be stored and later retrieved for display or processing
-      const newMessage = await Message.create({
+      const newMessage = new Message({
          senderId,
          receiverId,
          message,
@@ -31,7 +31,7 @@ export const sendMessage = async (req, res) => {
 
       // After the new message is successfully created, we need to associate it with the conversation
       // This is important because we want to keep track of all messages exchanged in the conversation
-      if (message) {
+      if (newMessage) {
          // Add the new message's _id to the conversation's 'messages' array
          // This links the message to the conversation, ensuring the conversation stores all the messages it contains
          conversation.messages.push(newMessage._id);
@@ -42,9 +42,9 @@ export const sendMessage = async (req, res) => {
       //   await newMessage.save();
 
       //this will run in parallel
-      Promise.all([conversation.save(), newMessage.save()]);
+      await Promise.all([conversation.save(), newMessage.save()]);
 
-      res.status(200).json({ newMessage });
+      res.status(200).json(newMessage);
    } catch (error) {
       console.log("error in sendMessage controller", error.message);
       res.status(500).json({ message: error.message });
