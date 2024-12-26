@@ -2,10 +2,11 @@ import { Message } from "./Message";
 import useGetMessage from "../../hooks/useGetMessage";
 import MessageSkeleton from "../skeleton/MessageSkeleton";
 import { useEffect, useRef } from "react";
-import { set } from "mongoose";
-
+import useListenMessages from "../../hooks/useListenMessages";
 const Messages = () => {
    const { loading, messages } = useGetMessage();
+
+   useListenMessages(); //listen any incoming messages from the socket
 
    const lastMessageRef = useRef();
    useEffect(() => {
