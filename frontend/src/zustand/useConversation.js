@@ -5,9 +5,9 @@ const useConversation = create((set) => ({
    setSelectedConversation: (selectedConversation) =>
       set({ selectedConversation }),
    messages: [],
-   setMessages: (msg) => {
-      console.log("New messages:", msg); // Logs the new messages
-      set({ msg }); // Updates the messages state
+   setMessages: (messages) => {
+      console.log("New messages:", messages); // Logs the new messages
+      set({ messages }); // Updates the messages state
    },
 }));
 

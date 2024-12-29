@@ -6,7 +6,7 @@ const useGetMessage = () => {
    const { messages, setMessages, selectedConversation } = useConversation(); //from zustand
 
    useEffect(() => {
-      async function getMessages() {
+      const getMessages = async () => {
          setLoading(true);
 
          try {
@@ -15,26 +15,21 @@ const useGetMessage = () => {
             );
             const data = await res.json();
 
-            if (data.error) {
-               throw new Error(data.error);
-            }
+            if (data.error) throw new Error(data.error);
 
             setMessages(data);
+
+            // setMessages(data);
          } catch (error) {
             toast.error(error.message);
-            setMessages([]); // Reset messages on error
          } finally {
             setLoading(false);
          }
-      }
-      if (selectedConversation && selectedConversation._id) {
-         getMessages();
-      } else {
-         setMessages([]); // Reset messages when no conversation is selected
-      }
-   }, [selectedConversation._id, setMessages]);
+      };
+      if (selectedConversation?._id) getMessages();
+   }, [selectedConversation?._id, setMessages]);
    // return { loading, messages };
-   return { loading, messages: messages || [] }; // Ensure messages is always an array
+   return { loading, messages }; // Ensure messages is always an array
 };
 
 export default useGetMessage;
