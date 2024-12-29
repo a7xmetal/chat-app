@@ -23,7 +23,8 @@ export const SocketContextProvider = ({ children }) => {
       // If the user is authenticated (authUser is truthy)
       if (authUser) {
          // Establish a new socket connection to the server with the user's ID as a query parameter
-         const socket = io("http://localhost:5050", {
+         // const socket = io("http://localhost:5050", {
+         const socket = io("https://chat-app-prod-8wkq.onrender.com", {
             // it's used to establish a connection with the Socket.IO server.
             query: {
                //The query object allows you to send query parameters when establishing the WebSocket connection.
